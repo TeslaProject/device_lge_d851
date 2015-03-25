@@ -3,7 +3,7 @@ PRODUCT_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 $(call inherit-product, device/lge/d851/full_d851.mk)
 
 # Inherit some common tesla stuff.
-$(call inherit-product, vendor/tesla/configs/common_full_phone.mk)
+$(call inherit-product, vendor/tesla/configs/common.mk)
 
 PRODUCT_NAME := tesla_d851
 
