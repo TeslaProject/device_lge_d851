@@ -17,11 +17,19 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
 # Get non-open-source specific aspects
-$(call inherit-product-if-exists, vendor/lge/d851/d851-vendor.mk)
+$(call inherit-product-if-exists, vendor/lge/d850/d850-vendor.mk)
 
 # Audio
 PRODUCT_COPY_FILES += \
-    device/lge/g3-common/configs/mixer_paths_bcm.xml:system/etc/mixer_paths.xml
+    device/lge/g3-common/configs/mixer_paths_qcwcn.xml:system/etc/mixer_paths.xml
+
+# Overlays
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+
+# Bluetooth
+PRODUCT_PACKAGES += \
+    init.galbi.bt.sh \
+    init.galbi.bt_vendor.rc
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -33,10 +41,16 @@ PRODUCT_COPY_FILES += \
 
 # Wifi
 PRODUCT_PACKAGES += \
-    libnetcmdiface
+    hostapd_default.conf \
+    libwcnss_qmi \
+    wcnss_service
 
-# Get BCMDHD configs
-$(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
+PRODUCT_COPY_FILES += \
+    device/lge/g3-common/wcnss/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
+    device/lge/g3-common/wcnss/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini \
+    device/lge/g3-common/wcnss/WCNSS_qcom_wlan_nv.bin:system/etc/firmware/wlan/prima/WCNSS_qcom_wlan_nv.bin \
+    device/lge/g3-common/wcnss/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
+    device/lge/g3-common/wcnss/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf
 
 # common g3
 $(call inherit-product, device/lge/g3-common/g3.mk)
